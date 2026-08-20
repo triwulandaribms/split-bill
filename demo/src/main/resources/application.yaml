@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM}
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${SPRING_JPA_SHOW_SQL}
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED}
+    locations: ${SPRING_FLYWAY_LOCATIONS}
+    baseline-on-migrate: ${SPRING_FLYWAY_BASELINE_ON_MIGRATE}
+  jackson:
+    time-zone: Asia/Jakarta
+
+sk:
+  jwt:
+    key: ${SK_JWT_KEY}
