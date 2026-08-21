@@ -1,10 +1,11 @@
-package com.allobankdev.demo;
+package com.allobankdev.splitbill;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class SplitbillApplicationTests {
 
 	@Test
 	void contextLoads() {

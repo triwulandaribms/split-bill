@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class allobankdev {
+public class SplitBillApplication {
     public static void main(String[] args) {
 
         Dotenv dotenv = Dotenv.configure()
@@ -19,7 +19,7 @@ public class allobankdev {
                 System.setProperty(entry.getKey(), entry.getValue())
         );
 
-        SpringApplication.run(allobankdev.class, args);
+        SpringApplication.run(SplitBillApplication.class, args);
     }
 
 }

@@ -32,6 +32,9 @@ public class BillGroup {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+    
     public BillGroup(String name) {
         this.name = name;
     }
@@ -39,4 +42,6 @@ public class BillGroup {
     public void update(String name) {
         this.name = name;
     }
+
+    
 }
