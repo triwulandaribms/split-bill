@@ -31,32 +31,3 @@ sk:
     key: ${SK_JWT_KEY}
 
 
-# spring:
-#   application:
-#     name: ${SPRING_APPLICATION_NAME:splitbill}
-
-#   datasource:
-#     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/splitbill}
-#     username: ${SPRING_DATASOURCE_USERNAME:postgres}
-#     password: ${SPRING_DATASOURCE_PASSWORD:}
-
-#   jpa:
-#     database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}
-#     hibernate:
-#       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
-#     show-sql: ${SPRING_JPA_SHOW_SQL:false}
-
-#   flyway:
-#     enabled: ${SPRING_FLYWAY_ENABLED:false}
-#     locations: ${SPRING_FLYWAY_LOCATIONS:classpath:db/migration}
-#     baseline-on-migrate: ${SPRING_FLYWAY_BASELINE_ON_MIGRATE:true}
-
-#   jackson:
-#     time-zone: Asia/Jakarta
-
-#   github:
-#     username: ${GITHUB_USERNAME:}
-
-# sk:
-#   jwt:
-#     key: ${SK_JWT_KEY:}

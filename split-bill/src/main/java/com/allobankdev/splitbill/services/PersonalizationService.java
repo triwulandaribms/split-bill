@@ -38,3 +38,4 @@ public class PersonalizationService {
                 .divide(BigDecimal.valueOf(100));
     }
 }
+

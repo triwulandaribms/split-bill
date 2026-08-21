@@ -21,150 +21,122 @@ import com.allobankdev.splitbill.repository.ExpenseRepository;
 @Service
 public class SettlementService {
 
-    private final BillGroupRepository billGroupRepository;
-    private final ExpenseRepository expenseRepository;
-    private final ExpenseParticipantRepository expenseParticipantRepository;
-    private final PersonalizationService personalizationService;
-    private final SettlementCalculator settlementCalculator;
+        private final BillGroupRepository billGroupRepository;
+        private final ExpenseRepository expenseRepository;
+        private final ExpenseParticipantRepository expenseParticipantRepository;
+        private final PersonalizationService personalizationService;
+        private final SettlementCalculator settlementCalculator;
 
-    public SettlementService(
-            BillGroupRepository billGroupRepository,
-            ExpenseRepository expenseRepository,
-            ExpenseParticipantRepository expenseParticipantRepository,
-            PersonalizationService personalizationService,
-            SettlementCalculator settlementCalculator) {
+        public SettlementService(
+                        BillGroupRepository billGroupRepository,
+                        ExpenseRepository expenseRepository,
+                        ExpenseParticipantRepository expenseParticipantRepository,
+                        PersonalizationService personalizationService,
+                        SettlementCalculator settlementCalculator) {
 
-        this.billGroupRepository = billGroupRepository;
-        this.expenseRepository = expenseRepository;
-        this.expenseParticipantRepository =
-                expenseParticipantRepository;
-        this.personalizationService =
-                personalizationService;
-        this.settlementCalculator =
-                settlementCalculator;
-    }
-
-    public Response<Object> getSettlement(Integer groupId) {
-
-        BillGroup group =
-                billGroupRepository.findById(groupId)
-                        .orElse(null);
-
-        if (group == null) {
-
-            return Response.create(
-                    "STL",
-                    Response.RESPONSE_CODE_NOT_FOUND,
-                    "Group not found",
-                    null
-            );
+                this.billGroupRepository = billGroupRepository;
+                this.expenseRepository = expenseRepository;
+                this.expenseParticipantRepository = expenseParticipantRepository;
+                this.personalizationService = personalizationService;
+                this.settlementCalculator = settlementCalculator;
         }
 
-        List<Expense> expenses =
-                expenseRepository.findByGroupId(groupId);
+        public Response<Object> getSettlement(Integer groupId) {
 
-        Map<Integer, Participant> participantMap =
-                new HashMap<>();
+                BillGroup group = billGroupRepository.findById(groupId)
+                                .orElse(null);
 
-        Map<Integer, BigDecimal> paidMap =
-                new HashMap<>();
+                if (group == null) {
 
-        Map<Integer, BigDecimal> shareMap =
-                new HashMap<>();
+                        return Response.create(
+                                        "STL",
+                                        Response.RESPONSE_CODE_NOT_FOUND,
+                                        "Group not found",
+                                        null);
+                }
 
-        BigDecimal totalExpense =
-                BigDecimal.ZERO;
+                List<Expense> expenses = expenseRepository.findByGroupId(groupId);
 
-        for (Expense expense : expenses) {
+                Map<Integer, Participant> participantMap = new HashMap<>();
 
-            totalExpense =
-                    totalExpense.add(
-                            expense.getAmount()
-                    );
+                Map<Integer, BigDecimal> paidMap = new HashMap<>();
 
-            Participant payer =
-                    expense.getPaidBy();
+                Map<Integer, BigDecimal> shareMap = new HashMap<>();
 
-            Integer payerId =
-                    payer.getId();
+                BigDecimal totalExpense = BigDecimal.ZERO;
 
-            participantMap.put(
-                    payerId,
-                    payer
-            );
+                for (Expense expense : expenses) {
 
-            paidMap.put(
-                    payerId,
-                    paidMap.getOrDefault(
-                            payerId,
-                            BigDecimal.ZERO
-                    ).add(
-                            expense.getAmount()
-                    )
-            );
+                        totalExpense = totalExpense.add(
+                                        expense.getAmount());
 
-            List<ExpenseParticipant> expenseParticipants =
-                    expenseParticipantRepository
-                            .findByExpenseId(
-                                    expense.getId()
-                            );
+                        Participant payer = expense.getPaidBy();
 
-            for (ExpenseParticipant expenseParticipant :
-                    expenseParticipants) {
+                        Integer payerId = payer.getId();
 
-                Participant participant =
-                        expenseParticipant.getParticipant();
+                        participantMap.put(
+                                        payerId,
+                                        payer);
 
-                Integer participantId =
-                        participant.getId();
+                        paidMap.put(
+                                        payerId,
+                                        paidMap.getOrDefault(
+                                                        payerId,
+                                                        BigDecimal.ZERO).add(
+                                                                        expense.getAmount()));
 
-                participantMap.put(
-                        participantId,
-                        participant
-                );
+                        List<ExpenseParticipant> expenseParticipants = expenseParticipantRepository
+                                        .findByExpenseId(
+                                                        expense.getId());
 
-                shareMap.put(
-                        participantId,
-                        shareMap.getOrDefault(
-                                participantId,
-                                BigDecimal.ZERO
-                        ).add(
-                                expenseParticipant
-                                        .getShareAmount()
-                        )
-                );
-            }
+                        for (ExpenseParticipant expenseParticipant : expenseParticipants) {
+
+                                Participant participant = expenseParticipant.getParticipant();
+
+                                Integer participantId = participant.getId();
+
+                                participantMap.put(
+                                                participantId,
+                                                participant);
+
+                                shareMap.put(
+                                                participantId,
+                                                shareMap.getOrDefault(
+                                                                participantId,
+                                                                BigDecimal.ZERO).add(
+                                                                                expenseParticipant
+                                                                                                .getShareAmount()));
+                        }
+                }
+
+                System.out.println("=================================");
+                System.out.println("TOTAL EXPENSE = " + totalExpense);
+                System.out.println("PAID MAP      = " + paidMap);
+                System.out.println("SHARE MAP     = " + shareMap);
+                System.out.println("PARTICIPANTS  = " + participantMap);
+                System.out.println("=================================");
+
+                List<SettlementItem> settlements = settlementCalculator.calculate(
+                                participantMap,
+                                paidMap,
+                                shareMap);
+
+                BigDecimal serviceChargePct = personalizationService
+                                .calculateServiceChargePercentage();
+
+                BigDecimal serviceChargeAmount = personalizationService
+                                .calculateServiceChargeAmount(
+                                                totalExpense);
+
+                SettlementResponse response = new SettlementResponse(
+                                settlements,
+                                serviceChargePct,
+                                serviceChargeAmount);
+
+                return Response.create(
+                                "STL",
+                                Response.RESPONSE_CODE_SUCCESS,
+                                "Settlement calculated successfully",
+                                response);
         }
-
-        List<SettlementItem> settlements =
-                settlementCalculator.calculate(
-                        participantMap,
-                        paidMap,
-                        shareMap
-                );
-
-        BigDecimal serviceChargePct =
-                personalizationService
-                        .calculateServiceChargePercentage();
-
-        BigDecimal serviceChargeAmount =
-                personalizationService
-                        .calculateServiceChargeAmount(
-                                totalExpense
-                        );
-
-        SettlementResponse response =
-                new SettlementResponse(
-                        settlements,
-                        serviceChargePct,
-                        serviceChargeAmount
-                );
-
-        return Response.create(
-                "STL",
-                Response.RESPONSE_CODE_SUCCESS,
-                "Settlement calculated successfully",
-                response
-        );
-    }
 }
