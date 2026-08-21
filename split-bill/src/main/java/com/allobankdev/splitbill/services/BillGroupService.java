@@ -1,7 +1,10 @@
 package com.allobankdev.splitbill.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,112 +20,122 @@ import com.allobankdev.splitbill.repository.ParticipantRepository;
 @Service
 public class BillGroupService {
 
-    private final BillGroupRepository billGroupRepository;
-    private final ParticipantRepository participantRepository;
+        private final BillGroupRepository billGroupRepository;
+        private final ParticipantRepository participantRepository;
 
-    public BillGroupService(
-            BillGroupRepository billGroupRepository,
-            ParticipantRepository participantRepository) {
+        public BillGroupService(
+                        BillGroupRepository billGroupRepository,
+                        ParticipantRepository participantRepository) {
 
-        this.billGroupRepository = billGroupRepository;
-        this.participantRepository = participantRepository;
-    }
-
-    @Transactional
-    public Response<Object> createGroup(BillGroupReq req) {
-
-        if (req.name() == null || req.name().isBlank()) {
-            return Response.create(
-                    "GRP",
-                    Response.RESPONSE_CODE_INVALID_INPUT,
-                    "Group name is required",
-                    null
-            );
+                this.billGroupRepository = billGroupRepository;
+                this.participantRepository = participantRepository;
         }
 
-        if (req.participants() == null ||
-                req.participants().isEmpty()) {
+        @Transactional
+        public Response<Object> createGroup(BillGroupReq req) {
 
-            return Response.create(
-                    "GRP",
-                    Response.RESPONSE_CODE_INVALID_INPUT,
-                    "Participants are required",
-                    null
-            );
-        }
+                if (req == null) {
+                        return Response.create(
+                                        "GRP",
+                                        Response.RESPONSE_CODE_INVALID_INPUT,
+                                        "Request body is required",
+                                        null);
+                }
 
-        BillGroup group =
-                new BillGroup(req.name());
+                if (req.name() == null || req.name().isBlank()) {
+                        return Response.create(
+                                        "GRP",
+                                        Response.RESPONSE_CODE_INVALID_INPUT,
+                                        "Group name is required",
+                                        null);
+                }
 
-        group = billGroupRepository.save(group);
+                if (req.participants() == null ||
+                                req.participants().isEmpty()) {
 
-        List<Participant> participants =
-                new ArrayList<>();
+                        return Response.create(
+                                        "GRP",
+                                        Response.RESPONSE_CODE_INVALID_INPUT,
+                                        "Participants are required",
+                                        null);
+                }
 
-        for (String name : req.participants()) {
+                Set<String> participantNames = new HashSet<>();
 
-            if (name == null || name.isBlank()) {
+                for (String name : req.participants()) {
+
+                        if (name == null || name.isBlank()) {
+                                return Response.create(
+                                                "GRP",
+                                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                                "Participant name cannot be empty",
+                                                null);
+                        }
+
+                        String normalizedName = name.trim().toLowerCase(Locale.ROOT);
+
+                        if (!participantNames.add(normalizedName)) {
+                                return Response.create(
+                                                "GRP",
+                                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                                "Duplicate participant name: " + name,
+                                                null);
+                        }
+                }
+
+                BillGroup group = new BillGroup(req.name().trim());
+
+                group = billGroupRepository.save(group);
+
+                List<Participant> participants = new ArrayList<>();
+
+                for (String name : req.participants()) {
+
+                        Participant participant = new Participant(
+                                        group,
+                                        name.trim());
+
+                        participants.add(participant);
+                }
+
+                participantRepository.saveAll(participants);
+
+                BillGroupDto response = new BillGroupDto(
+                                group.getId(),
+                                group.getName(),
+                                group.getCreatedAt(),
+                                group.getUpdatedAt());
+
                 return Response.create(
-                        "GRP",
-                        Response.RESPONSE_CODE_INVALID_INPUT,
-                        "Participant name cannot be empty",
-                        null
-                );
-            }
-
-            Participant participant =
-                    new Participant(group, name);
-
-            participants.add(participant);
+                                "GRP",
+                                Response.RESPONSE_CODE_SUCCESS,
+                                "Group created successfully",
+                                response);
         }
 
-        participantRepository.saveAll(participants);
+        public Response<Object> getGroupById(Integer id) {
 
-        BillGroupDto response =
-                new BillGroupDto(
-                        group.getId(),
-                        group.getName(),
-                        group.getCreatedAt(),
-                        group.getUpdatedAt()
-                );
+                return billGroupRepository.findById(id)
+                                .map(group -> {
 
-        return Response.create(
-                "GRP",
-                Response.RESPONSE_CODE_SUCCESS,
-                "Group created successfully",
-                response
-        );
-    }
+                                        BillGroupDto response = new BillGroupDto(
+                                                        group.getId(),
+                                                        group.getName(),
+                                                        group.getCreatedAt(),
+                                                        group.getUpdatedAt());
 
-    public Response<Object> getGroupById(Integer id) {
-
-        return billGroupRepository.findById(id)
-                .map(group -> {
-
-                    BillGroupDto response =
-                            new BillGroupDto(
-                                    group.getId(),
-                                    group.getName(),
-                                    group.getCreatedAt(),
-                                    group.getUpdatedAt()
-                            );
-
-                    return Response.create(
-                            "GRP",
-                            Response.RESPONSE_CODE_SUCCESS,
-                            "Group found",
-                            response
-                    );
-                })
-                .orElse(
-                        Response.create(
-                                "GRP",
-                                Response.RESPONSE_CODE_NOT_FOUND,
-                                "Group not found",
-                                null
-                        )
-                );
-    }
-
+                                        return Response.create(
+                                                        "GRP",
+                                                        Response.RESPONSE_CODE_SUCCESS,
+                                                        "Group found",
+                                                        response);
+                                })
+                                .orElse(
+                                                Response.create(
+                                                                "GRP",
+                                                                Response.RESPONSE_CODE_NOT_FOUND,
+                                                                "Group not found",
+                                                                null));
+        }
 
 }

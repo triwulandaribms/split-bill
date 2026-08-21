@@ -2,7 +2,9 @@ package com.allobankdev.splitbill.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,59 +98,74 @@ public class ExpenseService {
             );
         }
 
+        Set<Integer> participantIds = new HashSet<>();
+
         BigDecimal totalShare = BigDecimal.ZERO;
 
         List<Participant> participants =
                 new ArrayList<>();
 
-        for (ExpenseParticipantReq participantReq :
-                req.participants()) {
-
-            if (participantReq.participantId() == null ||
-                    participantReq.shareAmount() == null ||
-                    participantReq.shareAmount()
-                            .compareTo(BigDecimal.ZERO) < 0) {
-
-                return Response.create(
-                        "EXP",
-                        Response.RESPONSE_CODE_INVALID_INPUT,
-                        "Invalid participant share",
-                        null
-                );
-            }
-
-            Participant participant =
-                    participantRepository
-                            .findById(participantReq.participantId())
-                            .orElse(null);
-
-            if (participant == null) {
-                return Response.create(
-                        "EXP",
-                        Response.RESPONSE_CODE_NOT_FOUND,
-                        "Participant not found",
-                        null
-                );
-            }
-
-            if (!participant.getGroup()
-                    .getId()
-                    .equals(group.getId())) {
-
-                return Response.create(
-                        "EXP",
-                        Response.RESPONSE_CODE_INVALID_INPUT,
-                        "Participant does not belong to this group",
-                        null
-                );
-            }
-
-            participants.add(participant);
-
-            totalShare = totalShare.add(
-                    participantReq.shareAmount()
-            );
-        }
+                for (ExpenseParticipantReq participantReq :
+                        req.participants()) {
+                
+                    if (participantReq.participantId() == null ||
+                            participantReq.shareAmount() == null ||
+                            participantReq.shareAmount()
+                                    .compareTo(BigDecimal.ZERO) <= 0) {
+                
+                        return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                "Participant ID and positive share amount are required",
+                                null
+                        );
+                    }
+                
+                    if (!participantIds.add(
+                            participantReq.participantId())) {
+                
+                        return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                "Duplicate participant in expense",
+                                null
+                        );
+                    }
+                
+                    Participant participant =
+                            participantRepository
+                                    .findById(
+                                            participantReq.participantId()
+                                    )
+                                    .orElse(null);
+                
+                    if (participant == null) {
+                        return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_NOT_FOUND,
+                                "Participant not found",
+                                null
+                        );
+                    }
+                
+                    if (!participant.getGroup()
+                            .getId()
+                            .equals(group.getId())) {
+                
+                        return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                "Participant does not belong to this group",
+                                null
+                        );
+                    }
+                
+                    participants.add(participant);
+                
+                    totalShare = totalShare.add(
+                            participantReq.shareAmount()
+                    );
+                }
 
         if (totalShare.compareTo(req.amount()) != 0) {
 
