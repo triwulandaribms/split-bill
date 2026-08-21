@@ -17,6 +17,8 @@ spring:
     baseline-on-migrate: ${SPRING_FLYWAY_BASELINE_ON_MIGRATE}
   jackson:
     time-zone: Asia/Jakarta
+  github:
+  username: ${GITHUB_USERNAME}
 
 sk:
   jwt:
