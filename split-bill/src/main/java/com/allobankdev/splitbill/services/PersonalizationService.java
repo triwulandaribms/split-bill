@@ -1,6 +1,5 @@
 package com.allobankdev.splitbill.services;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +29,10 @@ public class PersonalizationService {
     public BigDecimal calculateServiceChargeAmount(
             BigDecimal totalExpense) {
 
-        BigDecimal percentage =
-                calculateServiceChargePercentage();
+        BigDecimal percentage = calculateServiceChargePercentage();
 
         return totalExpense
                 .multiply(percentage)
                 .divide(BigDecimal.valueOf(100));
     }
 }
-

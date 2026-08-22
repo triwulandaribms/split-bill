@@ -1,6 +1,20 @@
+# Split Bill API
+
+Backend REST API untuk membantu kelompok dalam mengelola pengeluaran bersama dan menghitung settlement, yaitu menentukan siapa yang harus membayar kepada siapa dan berapa jumlah yang harus dibayarkan.
+
+---
+
 # Cara Menjalankan Program
 
-Cek terlebih dahulu bahwa Java 21 + maven sudah terinstall.
+Pastikan terlebih dahulu Java 21, Maven, dan PostgreSQL sudah terinstall.
+
+> **Catatan Docker**
+>
+> Project ini sudah menyediakan `Dockerfile` menggunakan multi-stage build sesuai dengan requirement dari assignment.
+>
+> Namun, pengembangan dan pengujian aplikasi pada project ini dilakukan secara lokal karena environment Windows yang digunakan tidak mendukung Docker Desktop. Oleh karena saya tetap sediakan Dockerfile di root project, tetapi proses running dan testing dilakukan menggunakan Java, Maven, dan PostgreSQL secara lokal.
+
+---
 
 ## 1. Clone Repository
 
@@ -114,6 +128,12 @@ Contoh Respon :
     }
 }
 ```
+
+Untuk Docker
+```bash
+curl http://localhost:4110/api/groups/{id}
+```
+
 
 ## 6. Menambah Expense
 
@@ -236,17 +256,17 @@ Setelah program berhasil dijalankan, bisa jalankan juga unit testnya
 mvn test
 ```
 
-## 9. Cara Menjalankan Docker
-
-```bash
-BELUM DIIMPLEMENTASIKAN
-```
-
-## 10. Submission Question
+## 9. Submission Question
 
 ```bash 
 What was the hardest design decision you made while building this, and what trade-off did you accept?
 ```
 Keputusan desain tersulit yang saya buat adalah memisahkan logika perhitungan settlement dari SettlementService ke dalam class khusus bernama SettlementCalculator. Perhitungan settlement merupakan bagian penting dari aplikasi karena harus menentukan siapa yang harus membayar dan kepada siapa, sekaligus memastikan semua perhitungan uang menggunakan BigDecimal agar tetap akurat. Dengan pemisahan ini, SettlementService dapat fokus pada pengambilan data dari database dan pembuatan response, sedangkan SettlementCalculator fokus pada perhitungan settlement dan dapat diuji secara terpisah. Trade-off yang saya terima adalah struktur kode menjadi sedikit lebih kompleks karena membutuhkan class tambahan dan beberapa Map sebagai data input, tetapi menurut saya hal ini lebih mudah dipelihara dan diuji dibandingkan menempatkan seluruh logika dalam satu service.
+
+
+
+
+
+
 
 

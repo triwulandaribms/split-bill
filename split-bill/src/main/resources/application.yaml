@@ -28,8 +28,6 @@ spring:
 github:
   username: ${GITHUB_USERNAME}
   
-sk:
-  jwt:
-    key: ${SK_JWT_KEY}
+
 
 
