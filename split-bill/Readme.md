@@ -12,7 +12,7 @@ Pastikan terlebih dahulu Java 21, Maven, dan PostgreSQL sudah terinstall.
 >
 > Project ini sudah menyediakan `Dockerfile` menggunakan multi-stage build sesuai dengan requirement dari assignment.
 >
-> Namun, pengembangan dan pengujian aplikasi pada project ini dilakukan secara lokal karena environment Windows yang digunakan tidak mendukung Docker Desktop. Oleh karena saya tetap sediakan Dockerfile di root project, tetapi proses running dan testing dilakukan menggunakan Java, Maven, dan PostgreSQL secara lokal.
+> Namun, pengembangan dan pengujian aplikasi pada project ini dilakukan secara lokal karena environment Windows yang digunakan tidak mendukung Docker Desktop. Oleh karena saya tetap sediakan Dockerfile di root project, tetapi proses running dan testing dilakukan menggunakan Java, Maven, dan PostgreSQL secara lokal. Dan saya juga menambahkan hit endpoint menggunakan docker.
 
 ---
 
@@ -42,6 +42,8 @@ SPRING_JPA_SHOW_SQL=
 SPRING_FLYWAY_ENABLED=
 SPRING_FLYWAY_LOCATIONS=
 SPRING_FLYWAY_BASELINE_ON_MIGRATE=
+
+SERVER_PORT=
 
 GITHUB_USERNAME=
 ```
