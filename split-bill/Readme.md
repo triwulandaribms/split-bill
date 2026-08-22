@@ -52,7 +52,14 @@ GITHUB_USERNAME
 ```
 digunakan untuk menghitung service_charge_pct
 
-## 3. Jalankan aplikasi
+
+## 3. Build Project
+
+```bash
+mvn clean package
+```
+
+## 4. Jalankan aplikasi
 
 Untuk Lokal 
 ```bash
@@ -65,7 +72,7 @@ docker compose up --build
 ```
 jika berhasil running lalu hit endpoint
 
-## 4. Membuat Bill Group
+## 5. Membuat Bill Group
 
 Untuk menjalankan projek split bill ini alur pertama yang dilakukan yaitu membuat bill group terlebih dahulu
 Gunakan endpoint ini :
@@ -107,7 +114,7 @@ curl -X POST http://localhost:4110/api/groups/add ^
   -d "{\"name\":\"Trip Bandung\",\"participants\":[\"Andi\",\"Budi\",\"Citra\"]}"
 ```
 
-## 5. Meilhat Detail Bill Group
+## 6. Meilhat Detail Bill Group
 
 Selain membuat bill group bisa juga melihat detailnya dengan hit endpoint :
 
@@ -137,7 +144,7 @@ curl http://localhost:4110/api/groups/{id}
 ```
 
 
-## 6. Menambah Expense
+## 7. Menambah Expense
 
 Setelah membuat bill group lalu buat Expense
 Gunakan endpoint ini :
@@ -193,7 +200,7 @@ curl -X POST http://localhost:4110/api/expenses/add ^
   -d "{\"groupId\":1,\"paidBy\":1,\"amount\":300000,\"description\":\"Makan pagi\",\"participants\":[{\"participantId\":1,\"shareAmount\":100000},{\"participantId\":2,\"shareAmount\":100000},{\"participantId\":3,\"shareAmount\":100000}]}"
 ```
 
-## 7. Menjalankan Settlement
+## 8. Menjalankan Settlement
 
 Jika sudah membuat bill group dan Expensenya selanjutnya jalankan settlementnya
 Gunakan endpoint ini :
@@ -251,14 +258,14 @@ Untuk Docker
 curl http://localhost:4110/api/groups/{id}/settlement
 ```
 
-## 8. Cara Menjalankan Unit Test
+## 9. Cara Menjalankan Unit Test
 
 Setelah program berhasil dijalankan, bisa jalankan juga unit testnya 
 ```bash
 mvn test
 ```
 
-## 9. Submission Question
+## 10. Submission Question
 
 ```bash 
 What was the hardest design decision you made while building this, and what trade-off did you accept?
