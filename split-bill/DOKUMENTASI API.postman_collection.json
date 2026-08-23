@@ -83,7 +83,7 @@
             },
             {
               "key": "Date",
-              "value": "Fri, 21 Aug 2026 12:04:36 GMT"
+              "value": "Sun, 23 Aug 2026 07:48:45 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -95,7 +95,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group created successfully\",\n    \"data\": {\n        \"id\": 5,\n        \"name\": \"Trip Jawa Timur\",\n        \"createdAt\": \"2026-08-21T19:04:36.1375781\",\n        \"updatedAt\": \"2026-08-21T19:04:36.1375781\"\n    }\n}"
+          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Trip Jawa Timur\",\n        \"participants\": [\n            \"Indra\",\n            \"Asep\",\n            \"Riyan\"\n        ]\n    }\n}"
         }
       ]
     },
@@ -129,60 +129,6 @@
         }
       },
       "response": [
-        {
-          "name": "error not found",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
-            },
-            "url": {
-              "raw": "http://127.0.0.1:8080/api/groups/6",
-              "protocol": "http",
-              "host": [
-                "127",
-                "0",
-                "0",
-                "1"
-              ],
-              "port": "8080",
-              "path": [
-                "api",
-                "groups",
-                "6"
-              ]
-            }
-          },
-          "status": "Not Found",
-          "code": 404,
-          "_postman_previewlanguage": null,
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            },
-            {
-              "key": "Transfer-Encoding",
-              "value": "chunked"
-            },
-            {
-              "key": "Date",
-              "value": "Fri, 21 Aug 2026 12:05:33 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=60"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            }
-          ],
-          "cookie": [],
-          "body": "{\n    \"code\": \"GRP01\",\n    \"message\": \"Group not found\",\n    \"data\": null\n}"
-        },
         {
           "name": "sukses",
           "originalRequest": {
@@ -223,7 +169,7 @@
             },
             {
               "key": "Date",
-              "value": "Fri, 21 Aug 2026 15:39:03 GMT"
+              "value": "Sun, 23 Aug 2026 07:51:21 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -235,7 +181,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group found\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Trip Jawa Timur\",\n        \"createdAt\": \"2026-08-21T21:54:30.570079\",\n        \"updatedAt\": \"2026-08-21T21:54:30.570079\"\n    }\n}"
+          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group found\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Trip Jawa Timur\",\n        \"participants\": [\n            \"Indra\",\n            \"Asep\",\n            \"Riyan\"\n        ]\n    }\n}"
         }
       ]
     },
@@ -316,7 +262,7 @@
             },
             {
               "key": "Date",
-              "value": "Fri, 21 Aug 2026 14:56:05 GMT"
+              "value": "Sun, 23 Aug 2026 07:57:42 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -328,53 +274,41 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"groupId\": 1,\n        \"paidBy\": 3,\n        \"amount\": 300000,\n        \"description\": \"Makan pagi\",\n        \"createdAt\": \"2026-08-21T21:56:05.8017956\"\n    }\n}"
-        }
-      ]
-    },
-    {
-      "name": "get settlement",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/groups/1/settlement",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "groups",
-            "1",
-            "settlement"
-          ]
-        }
-      },
-      "response": [
+          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"groupId\": 1,\n        \"paidBy\": 3,\n        \"amount\": 300000,\n        \"description\": \"Makan pagi\",\n        \"createdAt\": \"2026-08-23T14:57:42.0245847\"\n    }\n}"
+        },
         {
-          "name": "sukses",
+          "name": "error invalid amount",
           "originalRequest": {
-            "method": "GET",
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 350000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:8080/api/groups/1/settlement",
+              "raw": "http://127.0.0.1:8080/api/expenses/add",
               "protocol": "http",
               "host": [
-                "localhost"
+                "127",
+                "0",
+                "0",
+                "1"
               ],
               "port": "8080",
               "path": [
                 "api",
-                "groups",
-                "1",
-                "settlement"
+                "expenses",
+                "add"
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
+          "status": "Bad Request",
+          "code": 400,
           "_postman_previewlanguage": null,
           "header": [
             {
@@ -387,37 +321,44 @@
             },
             {
               "key": "Date",
-              "value": "Fri, 21 Aug 2026 15:37:37 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=60"
+              "value": "Sun, 23 Aug 2026 07:59:02 GMT"
             },
             {
               "key": "Connection",
-              "value": "keep-alive"
+              "value": "close"
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"STL00\",\n    \"message\": \"Settlement calculated successfully\",\n    \"data\": {\n        \"settlements\": [\n            {\n                \"from\": \"Indra\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            },\n            {\n                \"from\": \"Asep\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            }\n        ],\n        \"service_charge_pct\": 4,\n        \"service_charge_amount\": 12000\n    }\n}"
+          "body": "{\n    \"code\": \"EXP02\",\n    \"message\": \"Invalid total share\",\n    \"data\": null\n}"
         },
         {
-          "name": "error not found",
+          "name": "error groupId not found",
           "originalRequest": {
-            "method": "GET",
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 2,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:8080/api/groups/2/settlement",
+              "raw": "http://127.0.0.1:8080/api/expenses/add",
               "protocol": "http",
               "host": [
-                "localhost"
+                "127",
+                "0",
+                "0",
+                "1"
               ],
               "port": "8080",
               "path": [
                 "api",
-                "groups",
-                "2",
-                "settlement"
+                "expenses",
+                "add"
               ]
             }
           },
@@ -435,7 +376,7 @@
             },
             {
               "key": "Date",
-              "value": "Fri, 21 Aug 2026 15:41:44 GMT"
+              "value": "Sun, 23 Aug 2026 07:59:40 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -447,7 +388,78 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"STL01\",\n    \"message\": \"Group not found\",\n    \"data\": null\n}"
+          "body": "{\n    \"code\": \"EXP01\",\n    \"message\": \"Group not found\",\n    \"data\": null\n}"
+        }
+      ]
+    },
+    {
+      "name": "get settlement",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/groups/settlement/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "settlement",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/groups/settlement/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "settlement",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 08:03:06 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"STL00\",\n    \"message\": \"Settlement calculated successfully\",\n    \"data\": {\n        \"settlements\": [\n            {\n                \"from\": \"Indra\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            },\n            {\n                \"from\": \"Asep\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            }\n        ],\n        \"service_charge_pct\": 4,\n        \"service_charge_amount\": 12000\n    }\n}"
         }
       ]
     }

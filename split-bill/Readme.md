@@ -63,7 +63,7 @@ mvn clean package
 
 Untuk Lokal 
 ```bash
-mvn clean spring-boot:run
+mvn spring-boot:run
 ```
 
 Untuk Docker
