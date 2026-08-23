@@ -376,7 +376,7 @@ Contoh Respon
     }
 }
 ```
-Penjelasan, jadi hutang yang masih belum dibayar yaitu dari participant 3 yaitu Riyan. Untuk service charge amount
+Penjelasan, jadi hutang yang masih belum dibayar yaitu dari participant 3 yaitu Riyan. Dan untuk participant 2 yaitu budi tidak muncul karena sudah bayar hutang.Untuk service charge amount
 tetap segitu karena dia tetap ambil amount/total expense awal.
 
 ## 10. Menjalankan Unit Test
