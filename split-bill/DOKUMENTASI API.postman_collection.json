@@ -192,7 +192,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"category\": \"FOOD\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+          "raw": "{\r\n    \"groupId\": 1,\r\n    \"paidBy\": 1,\r\n    \"amount\": 80000,\r\n    \"description\": \"Dinner\",\r\n    \"category\": \"FOOD\",\r\n    \"participants\": [\r\n        {\r\n            \"participantId\": 2,\r\n            \"shareAmount\": 50000\r\n        },\r\n        {\r\n            \"participantId\": 3,\r\n            \"shareAmount\": 30000\r\n        }\r\n    ]\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -338,7 +338,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"category\": \"FOOD\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n    \"groupId\": 1,\r\n    \"paidBy\": 1,\r\n    \"amount\": 80000,\r\n    \"description\": \"Dinner\",\r\n    \"category\": \"FOOD\",\r\n    \"participants\": [\r\n        {\r\n            \"participantId\": 2,\r\n            \"shareAmount\": 50000\r\n        },\r\n        {\r\n            \"participantId\": 3,\r\n            \"shareAmount\": 30000\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -376,7 +376,7 @@
             },
             {
               "key": "Date",
-              "value": "Sun, 23 Aug 2026 10:18:10 GMT"
+              "value": "Sun, 23 Aug 2026 12:30:42 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -388,7 +388,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"groupId\": 1,\n        \"paidBy\": 3,\n        \"amount\": 300000,\n        \"description\": \"Makan pagi\",\n        \"category\": \"FOOD\",\n        \"createdAt\": \"2026-08-23T17:18:10.2094208\"\n    }\n}"
+          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"groupId\": 1,\n        \"paidBy\": 1,\n        \"amount\": 80000,\n        \"description\": \"Dinner\",\n        \"category\": \"FOOD\",\n        \"createdAt\": \"2026-08-23T19:30:42.2216836\"\n    }\n}"
         }
       ]
     },
@@ -447,7 +447,7 @@
             },
             {
               "key": "Date",
-              "value": "Sun, 23 Aug 2026 08:03:06 GMT"
+              "value": "Sun, 23 Aug 2026 12:37:01 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -459,7 +459,7 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"STL00\",\n    \"message\": \"Settlement calculated successfully\",\n    \"data\": {\n        \"settlements\": [\n            {\n                \"from\": \"Indra\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            },\n            {\n                \"from\": \"Asep\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            }\n        ],\n        \"service_charge_pct\": 4,\n        \"service_charge_amount\": 12000\n    }\n}"
+          "body": "{\n    \"code\": \"STL00\",\n    \"message\": \"Settlement calculated successfully\",\n    \"data\": {\n        \"settlements\": [\n            {\n                \"fromParticipantId\": 2,\n                \"toParticipantId\": 1,\n                \"from\": \"Asep\",\n                \"to\": \"Indra\",\n                \"amount\": 50000\n            },\n            {\n                \"fromParticipantId\": 3,\n                \"toParticipantId\": 1,\n                \"from\": \"Riyan\",\n                \"to\": \"Indra\",\n                \"amount\": 30000\n            }\n        ],\n        \"service_charge_pct\": 4,\n        \"service_charge_amount\": 3200\n    }\n}"
         }
       ]
     },
@@ -535,7 +535,7 @@
             },
             {
               "key": "Date",
-              "value": "Sun, 23 Aug 2026 10:18:54 GMT"
+              "value": "Sun, 23 Aug 2026 12:34:20 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -547,7 +547,102 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense summary calculated successfully\",\n    \"data\": [\n        {\n            \"category\": \"FOOD\",\n            \"totalAmount\": 300000\n        },\n        {\n            \"category\": \"TRANSPORT\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"ACCOMMODATION\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"OTHER\",\n            \"totalAmount\": 0\n        }\n    ]\n}"
+          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense summary calculated successfully\",\n    \"data\": [\n        {\n            \"category\": \"FOOD\",\n            \"totalAmount\": 80000\n        },\n        {\n            \"category\": \"TRANSPORT\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"ACCOMMODATION\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"OTHER\",\n            \"totalAmount\": 0\n        }\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "payment record",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"fromParticipantId\": 2,\r\n    \"toParticipantId\": 1,\r\n    \"amount\": 50000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/groups/payments/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "payments",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromParticipantId\": 2,\r\n    \"toParticipantId\": 1,\r\n    \"amount\": 50000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/groups/payments/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "payments",
+                "1"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 12:50:57 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"PAY00\",\n    \"message\": \"Payment recorded successfully\",\n    \"data\": null\n}"
         }
       ]
     }

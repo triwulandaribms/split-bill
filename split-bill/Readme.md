@@ -12,7 +12,7 @@ Pastikan terlebih dahulu Java 21, Maven, dan PostgreSQL sudah terinstall.
 >
 > Project ini sudah menyediakan `Dockerfile` menggunakan multi-stage build sesuai dengan requirement dari assignment.
 >
-> Namun, pengembangan dan pengujian aplikasi pada project ini dilakukan secara lokal karena environment Windows yang digunakan tidak mendukung Docker Desktop. Oleh karena saya tetap sediakan Dockerfile di root project, tetapi proses running dan testing dilakukan menggunakan Java, Maven, dan PostgreSQL secara lokal. Dan saya juga menambahkan hit endpoint menggunakan docker.
+> Namun, pengembangan dan pengujian aplikasi pada project ini dilakukan secara lokal karena environment Windows yang digunakan tidak mendukung Docker Desktop. Oleh karena saya tetap sediakan Dockerfile di root project, tetapi proses running dan testing dilakukan secara lokal. Dan saya juga menambahkan hit endpoint menggunakan docker.
 
 ---
 
@@ -79,7 +79,7 @@ docker run -p 4110:4110 splitbill
 
 jika berhasil running lalu hit endpoint
 
-## 5. Menjalankan Bill Group
+## 5. Langkah Pertama Menjalankan Bill Group
 
 Untuk menjalankan projek split bill ini alur pertama yang dilakukan yaitu membuat bill group terlebih dahulu
 Gunakan endpoint ini :
@@ -155,7 +155,7 @@ curl http://localhost:4110/api/groups/{id}
 ```
 
 
-## 6. Menjalankan Expense
+## 6. Langkah Kedua Menjalankan Expense
 
 Setelah membuat bill group lalu buat Expense
 Gunakan endpoint ini :
@@ -169,24 +169,20 @@ http://127.0.0.1:8080/api/expenses/add
 Contoh Request :
 ```bash
 {
-  "groupId": 1,
-  "paidBy": 3,
-  "amount": 300000,
-  "description": "Makan pagi",
-  "participants": [
-    {
-      "participantId": 1,
-      "shareAmount": 100000
-    },
-    {
-      "participantId": 2,
-      "shareAmount": 100000
-    },
-    {
-      "participantId": 3,
-      "shareAmount": 100000
-    }
-  ]
+    "groupId": 1,
+    "paidBy": 1,
+    "amount": 80000,
+    "description": "Dinner",
+    "participants": [
+        {
+            "participantId": 2,
+            "shareAmount": 50000
+        },
+        {
+            "participantId": 3,
+            "shareAmount": 30000
+        }
+    ]
 }
 ```
 Contoh Respon :
@@ -197,10 +193,11 @@ Contoh Respon :
     "data": {
         "id": 1,
         "groupId": 1,
-        "paidBy": 3,
-        "amount": 300000,
-        "description": "Makan pagi",
-        "createdAt": "2026-08-21T21:56:05.8017956"
+        "paidBy": 1,
+        "amount": 80000,
+        "description": "Dinner",
+        "category": "FOOD",
+        "createdAt": "2026-08-23T19:30:42.2216836"
     }
 }
 ```
@@ -208,7 +205,7 @@ Untuk Docker
 ```bash
 curl -X POST http://localhost:4110/api/expenses/add ^
   -H "Content-Type: application/json" ^
-  -d "{\"groupId\":1,\"paidBy\":1,\"amount\":300000,\"description\":\"Makan pagi\",\"participants\":[{\"participantId\":1,\"shareAmount\":100000},{\"participantId\":2,\"shareAmount\":100000},{\"participantId\":3,\"shareAmount\":100000}]}"
+  -d "{\"groupId\":1,\"paidBy\":1,\"amount\":80000,\"description\":\"Makan pagi\",\"participants\":[{\"participantId\":2,\"shareAmount\":50000},{\"participantId\":3,\"shareAmount\":30000}]}"
 ```
 
 Selain membuat expense dapat melihat expense summary
@@ -227,7 +224,7 @@ Contoh respon
     "data": [
         {
             "category": "FOOD",
-            "totalAmount": 300000.00
+            "totalAmount": 80000.00
         },
         {
             "category": "TRANSPORT",
@@ -246,12 +243,12 @@ Contoh respon
 ```
 Untuk Docker
 ```bash
-curl http://localhost:4110/api/api/expenses/summary/{groupId}
+curl http://localhost:4110/api/expenses/summary/{groupId}
 ```
 
-## 8. Menjalankan Settlement
+## 8. Langkah Ketiga Selanjutnya Menjalankan Settlement
 
-Jika sudah membuat bill group dan Expensenya selanjutnya jalankan settlementnya
+Jika sudah membuat bill group dan Expensenya selanjutnya cek settlementnya
 Gunakan endpoint ini :
 
 Untuk Lokal
@@ -268,24 +265,28 @@ Contoh Respon :
     "data": {
         "settlements": [
             {
-                "from": "Indra",
-                "to": "Riyan",
-                "amount": 100000
+                "fromParticipantId": 2,
+                "toParticipantId": 1,
+                "from": "Asep",
+                "to": "Indra",
+                "amount": 50000
             },
             {
-                "from": "Asep",
-                "to": "Riyan",
-                "amount": 100000
+                "fromParticipantId": 3,
+                "toParticipantId": 1,
+                "from": "Riyan",
+                "to": "Indra",
+                "amount": 30000
             }
         ],
         "service_charge_pct": 4,
-        "service_charge_amount": 12000
+        "service_charge_amount": 3200
     }
 }
 ```
-- Penjelasan dari respon settlement berdasarkan id ini bahwa Riyan sebelumnya membayar seluruh expense sebesar
-Rp 300.000, sedangkan bagian Riyan sendiri adalah Rp 100.000. Sehingga Indra dan Asep masing-masing perlu 
-membayar Rp 100.000 kepada Riyan.
+- Penjelasan dari respon settlement berdasarkan id ini bahwa Asep memiliki hutang sebesar
+Rp 50.000, sedangkan bagian Riyan sendiri adalah Rp 30.000. Sehingga Indra dan Asep masing-masing perlu 
+membayarnya kepada Riyan.
 
 - Bagian settlement calculation di hitung berdasarkan :
 ```bash
@@ -302,16 +303,83 @@ Participant dengan balance positif merupakan creditor, sedangkan participant den
 
 - Service Charge Amount dihitung dengan :
   ```bash
- total_expense × service_charge_pct / 100 (300.000 x 4/100)
+ total_expense × service_charge_pct / 100 (80.000 x 4/100)
   ```
 - service charge pct yang tadinya 4 dijadikan persen jadi 4% untuk mencari service charge amount
 
 Untuk Docker
 ```bash
-curl http://localhost:4110/api/groups/{id}/settlement
+curl http://localhost:4110/api/groups/settlement/{id}
 ```
 
-## 9. Cara Menjalankan Unit Test
+## 9. Langkah Keempat Selanjutnya Yaitu Jalankan Payment
+
+Gunakan endpoint ini :
+
+Untuk Lokal
+
+Method POST
+```bash
+http://127.0.0.1:8080/api/groups/payments/{groupId}
+```
+
+Contoh Request
+```bash
+{
+    "fromParticipantId": 2,
+    "toParticipantId": 1,
+    "amount": 50000
+}
+```
+Dimana saya mencoba melakukan payment untuk participant id 2 kepada participant id 1
+
+Contoh Respon
+```bash
+{
+    "code": "PAY00",
+    "message": "Payment recorded successfully",
+    "data": null
+}
+```
+
+Untuk Docker
+```bash
+curl http://localhost:4110/api/groups/payments/{groupId}
+```
+
+Lalu cek lagi settlementnya
+
+Untuk Lokal
+
+Methode GET:
+```bash
+http://localhost:8080/api/groups/settlement/{groupId}
+```
+
+Contoh Respon
+```bash
+{
+    "code": "STL00",
+    "message": "Settlement calculated successfully",
+    "data": {
+        "settlements": [
+            {
+                "fromParticipantId": 3,
+                "toParticipantId": 1,
+                "from": "Riyan",
+                "to": "Indra",
+                "amount": 30000.00
+            }
+        ],
+        "service_charge_pct": 4,
+        "service_charge_amount": 3200.00
+    }
+}
+```
+Penjelasan, jadi hutang yang masih belum dibayar yaitu dari participant 3 yaitu Riyan. Untuk service charge amount
+tetap segitu karena dia tetap ambil amount/total expense awal.
+
+## 10. Menjalankan Unit Test
 
 Setelah program berhasil dijalankan, bisa jalankan juga unit testnya 
 ```bash

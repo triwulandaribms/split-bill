@@ -124,10 +124,12 @@ public class SettlementCalculator {
                         Participant creditorParticipant = participants.get(creditor.participantId());
 
                         settlements.add(
-                                        new SettlementItemRes(
-                                                        debtorParticipant.getName(),
-                                                        creditorParticipant.getName(),
-                                                        settlementAmount));
+                                new SettlementItemRes(
+                                        debtorParticipant.getId(),
+                                        creditorParticipant.getId(),
+                                        debtorParticipant.getName(),
+                                        creditorParticipant.getName(),
+                                        settlementAmount));
 
                         BigDecimal remainingDebt = debtor.amount()
                                         .subtract(settlementAmount);
