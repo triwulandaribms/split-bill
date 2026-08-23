@@ -22,16 +22,17 @@ public class BillGroupController {
     @PostMapping("/add")
     public ResponseEntity<Response<Object>> create(
             @RequestBody BillGroupReq req) {
-
+    
         Response<Object> response =
                 billGroupService.createGroup(req);
-
+    
         if (response.code().equals(
-                "GRP" + Response.RESPONSE_CODE_INVALID_INPUT)) {
 
+                "GRP" + Response.RESPONSE_CODE_INVALID_INPUT)) {
+    
             return ResponseEntity.badRequest().body(response);
         }
-
+    
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
@@ -54,4 +55,5 @@ public class BillGroupController {
 
         return ResponseEntity.ok(response);
     }
+
 }

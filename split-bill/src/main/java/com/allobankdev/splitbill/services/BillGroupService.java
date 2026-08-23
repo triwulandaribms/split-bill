@@ -38,7 +38,7 @@ public class BillGroupService {
                         return Response.create(
                                         "GRP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Request body is required",
+                                        "Request required",
                                         null);
                 }
 
@@ -46,7 +46,7 @@ public class BillGroupService {
                         return Response.create(
                                         "GRP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Group name is required",
+                                        "Group name required",
                                         null);
                 }
 
@@ -56,7 +56,7 @@ public class BillGroupService {
                         return Response.create(
                                         "GRP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Participants are required",
+                                        "Participant required",
                                         null);
                 }
 
@@ -68,7 +68,7 @@ public class BillGroupService {
                                 return Response.create(
                                                 "GRP",
                                                 Response.RESPONSE_CODE_INVALID_INPUT,
-                                                "Participant name cannot be empty",
+                                                "Participant name required",
                                                 null);
                         }
 
@@ -78,7 +78,7 @@ public class BillGroupService {
                                 return Response.create(
                                                 "GRP",
                                                 Response.RESPONSE_CODE_INVALID_INPUT,
-                                                "Duplicate participant name: " + name,
+                                                "Duplicate participant: " + name,
                                                 null);
                         }
                 }

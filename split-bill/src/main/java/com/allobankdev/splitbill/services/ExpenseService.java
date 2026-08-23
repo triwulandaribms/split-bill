@@ -59,7 +59,7 @@ public class ExpenseService {
                         return Response.create(
                                         "EXP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Amount must be greater than zero",
+                                        "Invalid amount",
                                         null);
                 }
 
@@ -95,7 +95,7 @@ public class ExpenseService {
                         return Response.create(
                                         "EXP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Payer is not a participant of this group",
+                                        "Payer in not group",
                                         null);
                 }
 
@@ -125,7 +125,7 @@ public class ExpenseService {
                                 return Response.create(
                                                 "EXP",
                                                 Response.RESPONSE_CODE_INVALID_INPUT,
-                                                "Duplicate participant in expense",
+                                                "Duplicate participant",
                                                 null);
                         }
 
@@ -164,7 +164,7 @@ public class ExpenseService {
                         return Response.create(
                                         "EXP",
                                         Response.RESPONSE_CODE_INVALID_INPUT,
-                                        "Total participant shares must equal expense amount",
+                                        "Invalid total share",
                                         null);
                 }
 
