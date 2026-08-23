@@ -70,9 +70,16 @@ Untuk Docker
 ```bash
 docker compose up --build
 ```
+```bash
+docker build -t splitbill .
+```
+```bash
+docker run -p 4110:4110 splitbill
+```
+
 jika berhasil running lalu hit endpoint
 
-## 5. Membuat Bill Group
+## 5. Menjalankan Bill Group
 
 Untuk menjalankan projek split bill ini alur pertama yang dilakukan yaitu membuat bill group terlebih dahulu
 Gunakan endpoint ini :
@@ -117,8 +124,6 @@ curl -X POST http://localhost:4110/api/groups/add ^
   -d "{\"name\":\"Trip Jawa Timur\",\"participants\":[\"Indra\",\"Asep\",\"Riyan\"]}"
 ```
 
-## 6. Meilhat Detail Bill Group
-
 Selain membuat bill group bisa juga melihat detailnya dengan hit endpoint :
 
 Untuk Lokal
@@ -150,7 +155,7 @@ curl http://localhost:4110/api/groups/{id}
 ```
 
 
-## 7. Menambah Expense
+## 6. Menjalankan Expense
 
 Setelah membuat bill group lalu buat Expense
 Gunakan endpoint ini :
@@ -204,6 +209,44 @@ Untuk Docker
 curl -X POST http://localhost:4110/api/expenses/add ^
   -H "Content-Type: application/json" ^
   -d "{\"groupId\":1,\"paidBy\":1,\"amount\":300000,\"description\":\"Makan pagi\",\"participants\":[{\"participantId\":1,\"shareAmount\":100000},{\"participantId\":2,\"shareAmount\":100000},{\"participantId\":3,\"shareAmount\":100000}]}"
+```
+
+Selain membuat expense dapat melihat expense summary
+
+Untuk lokal 
+
+Method GET
+```bash
+http://127.0.0.1:8080/api/expenses/summary/{groupId}
+```
+Contoh respon
+```bash
+{
+    "code": "EXP00",
+    "message": "Expense summary calculated successfully",
+    "data": [
+        {
+            "category": "FOOD",
+            "totalAmount": 300000.00
+        },
+        {
+            "category": "TRANSPORT",
+            "totalAmount": 0
+        },
+        {
+            "category": "ACCOMMODATION",
+            "totalAmount": 0
+        },
+        {
+            "category": "OTHER",
+            "totalAmount": 0
+        }
+    ]
+}
+```
+Untuk Docker
+```bash
+curl http://localhost:4110/api/api/expenses/summary/{groupId}
 ```
 
 ## 8. Menjalankan Settlement

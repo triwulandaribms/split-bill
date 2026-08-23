@@ -2,6 +2,7 @@ package com.allobankdev.splitbill.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.allobankdev.splitbill.entity.BillGroup;
 import com.allobankdev.splitbill.entity.Expense;
+import com.allobankdev.splitbill.entity.Expense.ExpenseCategory;
 import com.allobankdev.splitbill.entity.ExpenseParticipant;
 import com.allobankdev.splitbill.entity.Participant;
 import com.allobankdev.splitbill.model.Response;
 import com.allobankdev.splitbill.model.request.ExpenseParticipantReq;
 import com.allobankdev.splitbill.model.request.ExpenseReq;
+import com.allobankdev.splitbill.model.response.ExpenseCategorySummaryRes;
 import com.allobankdev.splitbill.model.response.ExpenseRes;
 import com.allobankdev.splitbill.repository.BillGroupRepository;
 import com.allobankdev.splitbill.repository.ExpenseParticipantRepository;
@@ -47,11 +50,11 @@ public class ExpenseService {
 
                 if (req == null) {
                         return Response.create(
-                                "EXP",
-                                Response.RESPONSE_CODE_INVALID_INPUT,
-                                "Request body is required",
-                                null);
-                    }
+                                        "EXP",
+                                        Response.RESPONSE_CODE_INVALID_INPUT,
+                                        "Request body is required",
+                                        null);
+                }
 
                 if (req.amount() == null ||
                                 req.amount().compareTo(BigDecimal.ZERO) <= 0) {
@@ -66,6 +69,7 @@ public class ExpenseService {
                 if (req.groupId() == null ||
                                 req.paidBy() == null ||
                                 req.participants() == null ||
+                                req.category() == null ||
                                 req.participants().isEmpty()) {
 
                         return Response.create(
@@ -172,7 +176,8 @@ public class ExpenseService {
                                 group,
                                 payer,
                                 req.amount(),
-                                req.description());
+                                req.description(),
+                                req.category());
 
                 expense = expenseRepository.save(expense);
 
@@ -201,6 +206,7 @@ public class ExpenseService {
                                 payer.getId(),
                                 expense.getAmount(),
                                 expense.getDescription(),
+                                expense.getCategory(),
                                 expense.getCreatedAt());
 
                 return Response.create(
@@ -209,4 +215,40 @@ public class ExpenseService {
                                 "Expense created successfully",
                                 response);
         }
+
+        public Response<Object> getExpenseCategorySummary(Integer groupId) {
+
+                if (!billGroupRepository.existsById(groupId)) {
+                        return Response.create(
+                                        "EXP",
+                                        Response.RESPONSE_CODE_NOT_FOUND,
+                                        "Group not found",
+                                        null);
+                }
+
+                List<Expense> expenses = expenseRepository.findByGroupId(groupId);
+
+                List<ExpenseCategorySummaryRes> summary = Arrays.stream(ExpenseCategory.values())
+                                .map(category -> {
+
+                                        BigDecimal total = expenses.stream()
+                                                        .filter(expense -> expense.getCategory() == category)
+                                                        .map(Expense::getAmount)
+                                                        .reduce(
+                                                                        BigDecimal.ZERO,
+                                                                        BigDecimal::add);
+
+                                        return new ExpenseCategorySummaryRes(
+                                                        category,
+                                                        total);
+                                })
+                                .toList();
+
+                return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_SUCCESS,
+                                "Expense summary calculated successfully",
+                                summary);
+        }
+
 }

@@ -16,11 +16,41 @@ import com.allobankdev.splitbill.model.response.SettlementItemRes;
 public class SettlementCalculator {
 
         private record Balance(
-                Integer participantId,
-                BigDecimal amount) {
+                        Integer participantId,
+                        BigDecimal amount) {
         }
 
         public List<SettlementItemRes> calculate(
+                        Map<Integer, Participant> participants,
+                        Map<Integer, BigDecimal> paidMap,
+                        Map<Integer, BigDecimal> shareMap) {
+
+                Map<Integer, BigDecimal> balanceMap = calculateBalances(
+                                participants,
+                                paidMap,
+                                shareMap);
+
+                List<Balance> creditors = new ArrayList<>();
+                List<Balance> debtors = new ArrayList<>();
+
+                separateBalances(
+                                balanceMap,
+                                creditors,
+                                debtors);
+
+                creditors.sort(
+                                Comparator.comparing(Balance::amount).reversed());
+
+                debtors.sort(
+                                Comparator.comparing(Balance::amount).reversed());
+
+                return createSettlements(
+                                participants,
+                                creditors,
+                                debtors);
+        }
+
+        private Map<Integer, BigDecimal> calculateBalances(
                         Map<Integer, Participant> participants,
                         Map<Integer, BigDecimal> paidMap,
                         Map<Integer, BigDecimal> shareMap) {
@@ -37,31 +67,31 @@ public class SettlementCalculator {
                                         participantId,
                                         BigDecimal.ZERO);
 
-                        BigDecimal balance = paid.subtract(share);
-
                         balanceMap.put(
                                         participantId,
-                                        balance);
+                                        paid.subtract(share));
                 }
 
-                List<Balance> creditors = new ArrayList<>();
+                return balanceMap;
+        }
 
-                List<Balance> debtors = new ArrayList<>();
+        private void separateBalances(
+                        Map<Integer, BigDecimal> balanceMap,
+                        List<Balance> creditors,
+                        List<Balance> debtors) {
 
                 for (Map.Entry<Integer, BigDecimal> entry : balanceMap.entrySet()) {
 
                         BigDecimal balance = entry.getValue();
 
-                        if (balance.compareTo(
-                                        BigDecimal.ZERO) > 0) {
+                        if (balance.compareTo(BigDecimal.ZERO) > 0) {
 
                                 creditors.add(
                                                 new Balance(
                                                                 entry.getKey(),
                                                                 balance));
 
-                        } else if (balance.compareTo(
-                                        BigDecimal.ZERO) < 0) {
+                        } else if (balance.compareTo(BigDecimal.ZERO) < 0) {
 
                                 debtors.add(
                                                 new Balance(
@@ -69,14 +99,12 @@ public class SettlementCalculator {
                                                                 balance.abs()));
                         }
                 }
+        }
 
-                creditors.sort(
-                                Comparator.comparing(
-                                                Balance::amount).reversed());
-
-                debtors.sort(
-                                Comparator.comparing(
-                                                Balance::amount).reversed());
+        private List<SettlementItemRes> createSettlements(
+                        Map<Integer, Participant> participants,
+                        List<Balance> creditors,
+                        List<Balance> debtors) {
 
                 List<SettlementItemRes> settlements = new ArrayList<>();
 
@@ -87,17 +115,13 @@ public class SettlementCalculator {
                                 && creditorIndex < creditors.size()) {
 
                         Balance debtor = debtors.get(debtorIndex);
-
                         Balance creditor = creditors.get(creditorIndex);
 
-                        BigDecimal settlementAmount = debtor.amount()
-                                        .min(creditor.amount());
+                        BigDecimal settlementAmount = debtor.amount().min(creditor.amount());
 
-                        Participant debtorParticipant = participants.get(
-                                        debtor.participantId());
+                        Participant debtorParticipant = participants.get(debtor.participantId());
 
-                        Participant creditorParticipant = participants.get(
-                                        creditor.participantId());
+                        Participant creditorParticipant = participants.get(creditor.participantId());
 
                         settlements.add(
                                         new SettlementItemRes(
@@ -106,12 +130,10 @@ public class SettlementCalculator {
                                                         settlementAmount));
 
                         BigDecimal remainingDebt = debtor.amount()
-                                        .subtract(
-                                                        settlementAmount);
+                                        .subtract(settlementAmount);
 
                         BigDecimal remainingCredit = creditor.amount()
-                                        .subtract(
-                                                        settlementAmount);
+                                        .subtract(settlementAmount);
 
                         debtors.set(
                                         debtorIndex,
@@ -125,15 +147,11 @@ public class SettlementCalculator {
                                                         creditor.participantId(),
                                                         remainingCredit));
 
-                        if (remainingDebt.compareTo(
-                                        BigDecimal.ZERO) == 0) {
-
+                        if (remainingDebt.compareTo(BigDecimal.ZERO) == 0) {
                                 debtorIndex++;
                         }
 
-                        if (remainingCredit.compareTo(
-                                        BigDecimal.ZERO) == 0) {
-
+                        if (remainingCredit.compareTo(BigDecimal.ZERO) == 0) {
                                 creditorIndex++;
                         }
                 }
@@ -141,5 +159,4 @@ public class SettlementCalculator {
                 return settlements;
         }
 
-        
 }

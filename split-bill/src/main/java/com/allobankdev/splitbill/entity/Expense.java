@@ -47,16 +47,28 @@ public class Expense {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Enumerated(EnumType.STRING)
+    private ExpenseCategory category;
+
+    public enum ExpenseCategory {
+        FOOD,
+        TRANSPORT,
+        ACCOMMODATION,
+        OTHER
+    }
+
     public Expense(
             BillGroup group,
             Participant paidBy,
             BigDecimal amount,
-            String description) {
+            String description,
+            ExpenseCategory category) {
 
         this.group = group;
         this.paidBy = paidBy;
         this.amount = amount;
         this.description = description;
+        this.category = category;
     }
 
     public void update(
