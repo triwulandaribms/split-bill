@@ -15,6 +15,11 @@ import com.allobankdev.splitbill.model.response.SettlementItemRes;
 @Component
 public class SettlementCalculator {
 
+        private record Balance(
+                Integer participantId,
+                BigDecimal amount) {
+        }
+
         public List<SettlementItemRes> calculate(
                         Map<Integer, Participant> participants,
                         Map<Integer, BigDecimal> paidMap,
@@ -136,8 +141,5 @@ public class SettlementCalculator {
                 return settlements;
         }
 
-        private record Balance(
-                        Integer participantId,
-                        BigDecimal amount) {
-        }
+        
 }
