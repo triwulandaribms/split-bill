@@ -43,18 +43,4 @@ public class Participant {
         this.name = name;
     }
 
-    public void update(String name) {
-        this.name = name;
-    }
-
-    public Participant(
-            Integer id,
-            BillGroup group,
-            String name) {
-
-        this.id = id;
-        this.group = group;
-        this.name = name;
-    }
-
 }

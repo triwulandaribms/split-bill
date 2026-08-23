@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.allobankdev.splitbill.entity.Participant;
-import com.allobankdev.splitbill.model.response.SettlementItem;
+import com.allobankdev.splitbill.model.response.SettlementItemRes;
 import com.allobankdev.splitbill.services.SettlementCalculator;
 
 class SettlementCalculatorTest {
@@ -69,7 +69,7 @@ class SettlementCalculatorTest {
                 new BigDecimal("100000")
         );
 
-        List<SettlementItem> result =
+        List<SettlementItemRes> result =
                 calculator.calculate(
                         participants,
                         paidMap,

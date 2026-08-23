@@ -12,8 +12,8 @@ import com.allobankdev.splitbill.entity.Expense;
 import com.allobankdev.splitbill.entity.ExpenseParticipant;
 import com.allobankdev.splitbill.entity.Participant;
 import com.allobankdev.splitbill.model.Response;
-import com.allobankdev.splitbill.model.response.SettlementItem;
-import com.allobankdev.splitbill.model.response.SettlementResponse;
+import com.allobankdev.splitbill.model.response.SettlementItemRes;
+import com.allobankdev.splitbill.model.response.SettlementRes;
 import com.allobankdev.splitbill.repository.BillGroupRepository;
 import com.allobankdev.splitbill.repository.ExpenseParticipantRepository;
 import com.allobankdev.splitbill.repository.ExpenseRepository;
@@ -109,14 +109,7 @@ public class SettlementService {
                         }
                 }
 
-                System.out.println("=================================");
-                System.out.println("TOTAL EXPENSE = " + totalExpense);
-                System.out.println("PAID MAP      = " + paidMap);
-                System.out.println("SHARE MAP     = " + shareMap);
-                System.out.println("PARTICIPANTS  = " + participantMap);
-                System.out.println("=================================");
-
-                List<SettlementItem> settlements = settlementCalculator.calculate(
+                List<SettlementItemRes> settlements = settlementCalculator.calculate(
                                 participantMap,
                                 paidMap,
                                 shareMap);
@@ -128,7 +121,7 @@ public class SettlementService {
                                 .calculateServiceChargeAmount(
                                                 totalExpense);
 
-                SettlementResponse response = new SettlementResponse(
+                SettlementRes response = new SettlementRes(
                                 settlements,
                                 serviceChargePct,
                                 serviceChargeAmount);

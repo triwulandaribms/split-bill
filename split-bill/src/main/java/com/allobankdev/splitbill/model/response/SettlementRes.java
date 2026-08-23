@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record SettlementResponse(
+public record SettlementRes(
 
-    List<SettlementItem> settlements,
+    List<SettlementItemRes> settlements,
 
     @JsonProperty("service_charge_pct")
     BigDecimal serviceChargePct,

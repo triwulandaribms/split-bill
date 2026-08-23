@@ -10,12 +10,12 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.allobankdev.splitbill.entity.Participant;
-import com.allobankdev.splitbill.model.response.SettlementItem;
+import com.allobankdev.splitbill.model.response.SettlementItemRes;
 
 @Component
 public class SettlementCalculator {
 
-        public List<SettlementItem> calculate(
+        public List<SettlementItemRes> calculate(
                         Map<Integer, Participant> participants,
                         Map<Integer, BigDecimal> paidMap,
                         Map<Integer, BigDecimal> shareMap) {
@@ -73,7 +73,7 @@ public class SettlementCalculator {
                                 Comparator.comparing(
                                                 Balance::amount).reversed());
 
-                List<SettlementItem> settlements = new ArrayList<>();
+                List<SettlementItemRes> settlements = new ArrayList<>();
 
                 int debtorIndex = 0;
                 int creditorIndex = 0;
@@ -95,7 +95,7 @@ public class SettlementCalculator {
                                         creditor.participantId());
 
                         settlements.add(
-                                        new SettlementItem(
+                                        new SettlementItemRes(
                                                         debtorParticipant.getName(),
                                                         creditorParticipant.getName(),
                                                         settlementAmount));

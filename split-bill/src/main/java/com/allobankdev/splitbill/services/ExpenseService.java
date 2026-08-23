@@ -16,7 +16,7 @@ import com.allobankdev.splitbill.entity.Participant;
 import com.allobankdev.splitbill.model.Response;
 import com.allobankdev.splitbill.model.request.ExpenseParticipantReq;
 import com.allobankdev.splitbill.model.request.ExpenseReq;
-import com.allobankdev.splitbill.model.response.ExpenseDto;
+import com.allobankdev.splitbill.model.response.ExpenseRes;
 import com.allobankdev.splitbill.repository.BillGroupRepository;
 import com.allobankdev.splitbill.repository.ExpenseParticipantRepository;
 import com.allobankdev.splitbill.repository.ExpenseRepository;
@@ -44,6 +44,14 @@ public class ExpenseService {
 
         @Transactional
         public Response<Object> createExpense(ExpenseReq req) {
+
+                if (req == null) {
+                        return Response.create(
+                                "EXP",
+                                Response.RESPONSE_CODE_INVALID_INPUT,
+                                "Request body is required",
+                                null);
+                    }
 
                 if (req.amount() == null ||
                                 req.amount().compareTo(BigDecimal.ZERO) <= 0) {
@@ -187,7 +195,7 @@ public class ExpenseService {
                 expenseParticipantRepository.saveAll(
                                 expenseParticipants);
 
-                ExpenseDto response = new ExpenseDto(
+                ExpenseRes response = new ExpenseRes(
                                 expense.getId(),
                                 group.getId(),
                                 payer.getId(),

@@ -3,7 +3,7 @@ package com.allobankdev.splitbill.model.response;
 
 import java.time.LocalDateTime;
 
-public record BillGroupDto(
+public record BillGroupRes(
         Integer id,
         String name,
         LocalDateTime createdAt,

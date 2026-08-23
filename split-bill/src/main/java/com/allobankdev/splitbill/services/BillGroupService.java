@@ -13,7 +13,7 @@ import com.allobankdev.splitbill.entity.BillGroup;
 import com.allobankdev.splitbill.entity.Participant;
 import com.allobankdev.splitbill.model.Response;
 import com.allobankdev.splitbill.model.request.BillGroupReq;
-import com.allobankdev.splitbill.model.response.BillGroupDto;
+import com.allobankdev.splitbill.model.response.BillGroupRes;
 import com.allobankdev.splitbill.repository.BillGroupRepository;
 import com.allobankdev.splitbill.repository.ParticipantRepository;
 
@@ -100,7 +100,7 @@ public class BillGroupService {
 
                 participantRepository.saveAll(participants);
 
-                BillGroupDto response = new BillGroupDto(
+                BillGroupRes response = new BillGroupRes(
                                 group.getId(),
                                 group.getName(),
                                 group.getCreatedAt(),
@@ -118,7 +118,7 @@ public class BillGroupService {
                 return billGroupRepository.findById(id)
                                 .map(group -> {
 
-                                        BillGroupDto response = new BillGroupDto(
+                                        BillGroupRes response = new BillGroupRes(
                                                         group.getId(),
                                                         group.getName(),
                                                         group.getCreatedAt(),
