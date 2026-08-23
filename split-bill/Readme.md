@@ -99,10 +99,13 @@ Contoh Respon :
     "code": "GRP00",
     "message": "Group created successfully",
     "data": {
-        "id": 5,
+        "id": 1,
         "name": "Trip Jawa Timur",
-        "createdAt": "2026-08-21T19:04:36.1375781",
-        "updatedAt": "2026-08-21T19:04:36.1375781"
+        "participants": [
+            "Indra",
+            "Asep",
+            "Riyan"
+        ]
     }
 }
 ```
@@ -111,7 +114,7 @@ Untuk Docker
 ```bash
 curl -X POST http://localhost:4110/api/groups/add ^
   -H "Content-Type: application/json" ^
-  -d "{\"name\":\"Trip Bandung\",\"participants\":[\"Andi\",\"Budi\",\"Citra\"]}"
+  -d "{\"name\":\"Trip Jawa Timur\",\"participants\":[\"Indra\",\"Asep\",\"Riyan\"]}"
 ```
 
 ## 6. Meilhat Detail Bill Group
@@ -128,12 +131,15 @@ Contoh Respon :
 ```bash
 {
     "code": "GRP00",
-    "message": "Group created successfully",
+    "message": "Group found",
     "data": {
-        "id": 5,
+        "id": 1,
         "name": "Trip Jawa Timur",
-        "createdAt": "2026-08-21T19:04:36.1375781",
-        "updatedAt": "2026-08-21T19:04:36.1375781"
+        "participants": [
+            "Indra",
+            "Asep",
+            "Riyan"
+        ]
     }
 }
 ```
@@ -209,7 +215,7 @@ Untuk Lokal
 
 Method GET
 ```bash
-http://localhost:8080/api/groups/{id}/settlement
+http://localhost:8080/api/groups/settlement/{groupId}
 ```
 Contoh Respon :
 ```bash

@@ -100,11 +100,16 @@ public class BillGroupService {
 
                 participantRepository.saveAll(participants);
 
+                List<String> participantss =
+                participantRepository.findByGroupId(group.getId())
+                        .stream()
+                        .map(Participant::getName)
+                        .toList();
+
                 BillGroupRes response = new BillGroupRes(
                                 group.getId(),
                                 group.getName(),
-                                group.getCreatedAt(),
-                                group.getUpdatedAt());
+                                participantss);
 
                 return Response.create(
                                 "GRP",
@@ -118,11 +123,16 @@ public class BillGroupService {
                 return billGroupRepository.findById(id)
                                 .map(group -> {
 
+                                        List<String> participants =
+                                        participantRepository.findByGroupId(group.getId())
+                                                .stream()
+                                                .map(Participant::getName)
+                                                .toList();
+
                                         BillGroupRes response = new BillGroupRes(
                                                         group.getId(),
                                                         group.getName(),
-                                                        group.getCreatedAt(),
-                                                        group.getUpdatedAt());
+                                                        participants);
 
                                         return Response.create(
                                                         "GRP",

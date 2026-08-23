@@ -20,7 +20,7 @@ public class SettlementController {
         this.settlementService = settlementService;
     }
 
-    @GetMapping("/{groupId}/settlement")
+    @GetMapping("/settlement/{groupId}")
     public ResponseEntity<Response<Object>> getSettlement(
             @PathVariable Integer groupId) {
 
