@@ -244,14 +244,18 @@ balance = total paid - total share
 ```
 Participant dengan balance positif merupakan creditor, sedangkan participant dengan balance negatif merupakan debtor.
 
-- Service Charge pct dihitung berdasarkan Github Username yaitu dengan rumus :
+- Service Charge pct dihitung berdasarkan Github Username
+- Github username saya : triwulandaribms, dikonversi ke kode ASCII = 1.624 
   ```bash
-  GitHub username/sudah dikonversi ke kode ASCII % 10
+   github username % 10 (1.624 % 10 = 4)
   ```
+- artinya 1.624 dimodulus/dibagi 10 maka sisa hasil baginya 4
+
 - Service Charge Amount dihitung dengan :
   ```bash
-  service_charge_amount = total_expense × service_charge_pct / 100
+ total_expense × service_charge_pct / 100 (300.000 x 4/100)
   ```
+- service charge pct yang tadinya 4 dijadikan persen jadi 4% untuk mencari service charge amount
 
 Untuk Docker
 ```bash
