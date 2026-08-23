@@ -1,0 +1,555 @@
+{
+  "info": {
+    "_postman_id": "b670d984-99ec-426b-bde6-b131c997eb6b",
+    "name": "DOKUMENTASI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31105927"
+  },
+  "item": [
+    {
+      "name": "add split bill",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Trip Jawa Timur\",\r\n  \"participants\": [\r\n    \"Indra\",\r\n    \"Asep\",\r\n    \"Riyan\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/groups/add",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "add"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Trip Jawa Timur\",\r\n  \"participants\": [\r\n    \"Indra\",\r\n    \"Asep\",\r\n    \"Riyan\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/groups/add",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "add"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 07:48:45 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Trip Jawa Timur\",\n        \"participants\": [\n            \"Indra\",\n            \"Asep\",\n            \"Riyan\"\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "get split bill",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/groups/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/groups/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 07:51:21 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"GRP00\",\n    \"message\": \"Group found\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Trip Jawa Timur\",\n        \"participants\": [\n            \"Indra\",\n            \"Asep\",\n            \"Riyan\"\n        ]\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "add expense",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"category\": \"FOOD\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/expenses/add",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "expenses",
+            "add"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "error invalid amount",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 350000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/expenses/add",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "expenses",
+                "add"
+              ]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 07:59:02 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"EXP02\",\n    \"message\": \"Invalid total share\",\n    \"data\": null\n}"
+        },
+        {
+          "name": "error groupId not found",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 2,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/expenses/add",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "expenses",
+                "add"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 07:59:40 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"EXP01\",\n    \"message\": \"Group not found\",\n    \"data\": null\n}"
+        },
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"category\": \"FOOD\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/expenses/add",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "expenses",
+                "add"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 10:18:10 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense created successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"groupId\": 1,\n        \"paidBy\": 3,\n        \"amount\": 300000,\n        \"description\": \"Makan pagi\",\n        \"category\": \"FOOD\",\n        \"createdAt\": \"2026-08-23T17:18:10.2094208\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "get settlement",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/groups/settlement/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "settlement",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/groups/settlement/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "settlement",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 08:03:06 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"STL00\",\n    \"message\": \"Settlement calculated successfully\",\n    \"data\": {\n        \"settlements\": [\n            {\n                \"from\": \"Indra\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            },\n            {\n                \"from\": \"Asep\",\n                \"to\": \"Riyan\",\n                \"amount\": 100000\n            }\n        ],\n        \"service_charge_pct\": 4,\n        \"service_charge_amount\": 12000\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "get expense summary",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/expenses/summary/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "expenses",
+            "summary",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"groupId\": 1,\r\n  \"paidBy\": 3,\r\n  \"amount\": 300000,\r\n  \"description\": \"Makan pagi\",\r\n  \"participants\": [\r\n    {\r\n      \"participantId\": 1,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 2,\r\n      \"shareAmount\": 100000\r\n    },\r\n    {\r\n      \"participantId\": 3,\r\n      \"shareAmount\": 100000\r\n    }\r\n  ]\r\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/expenses/summary/1",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "expenses",
+                "summary",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 23 Aug 2026 10:18:54 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"EXP00\",\n    \"message\": \"Expense summary calculated successfully\",\n    \"data\": [\n        {\n            \"category\": \"FOOD\",\n            \"totalAmount\": 300000\n        },\n        {\n            \"category\": \"TRANSPORT\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"ACCOMMODATION\",\n            \"totalAmount\": 0\n        },\n        {\n            \"category\": \"OTHER\",\n            \"totalAmount\": 0\n        }\n    ]\n}"
+        }
+      ]
+    }
+  ]
+}
