@@ -121,10 +121,8 @@ public class SettlementService {
                                 paidMap,
                                 shareMap);
 
-               
                 List<Payment> payments = paymentRepository.findByGroupId(groupId);
 
-             
                 settlements = applyPayments(
                                 settlements,
                                 payments);
@@ -159,25 +157,19 @@ public class SettlementService {
                         BigDecimal paidAmount = payments.stream()
                                         .filter(payment -> payment.getFromParticipant()
                                                         .getId()
-                                                        .equals(
-                                                                        settlement
-                                                                                        .fromParticipantId())
+                                                        .equals(settlement.fromParticipantId())
                                                         &&
                                                         payment.getToParticipant()
                                                                         .getId()
-                                                                        .equals(
-                                                                                        settlement
-                                                                                                        .toParticipantId()))
+                                                                        .equals(settlement.toParticipantId()))
                                         .map(Payment::getAmount)
                                         .reduce(
                                                         BigDecimal.ZERO,
                                                         BigDecimal::add);
 
-                        BigDecimal remaining = settlement.amount()
-                                        .subtract(paidAmount);
+                        BigDecimal remainingAmount = settlement.amount().subtract(paidAmount);
 
-                        if (remaining.compareTo(
-                                        BigDecimal.ZERO) > 0) {
+                        if (remainingAmount.compareTo(BigDecimal.ZERO) > 0) {
 
                                 result.add(
                                                 new SettlementItemRes(
@@ -185,10 +177,36 @@ public class SettlementService {
                                                                 settlement.toParticipantId(),
                                                                 settlement.from(),
                                                                 settlement.to(),
-                                                                remaining));
+                                                                remainingAmount));
                         }
                 }
 
                 return result;
         }
+
+        public BigDecimal getOutstandingAmount(
+                        Integer groupId,
+                        Integer fromParticipantId,
+                        Integer toParticipantId) {
+
+                Response<Object> response = getSettlement(groupId);
+
+                if (response.data() == null) {
+                        return BigDecimal.ZERO;
+                }
+
+                SettlementRes settlement = (SettlementRes) response.data();
+
+                return settlement.settlements()
+                                .stream()
+                                .filter(item -> item.fromParticipantId()
+                                                .equals(fromParticipantId)
+                                                &&
+                                                item.toParticipantId()
+                                                                .equals(toParticipantId))
+                                .map(SettlementItemRes::amount)
+                                .findFirst()
+                                .orElse(BigDecimal.ZERO);
+        }
+
 }

@@ -367,9 +367,17 @@ Contoh Respon
 {
     "code": "PAY00",
     "message": "Payment recorded successfully",
-    "data": null
+    "data": {
+        "fromParticipantId": 2,
+        "toParticipantId": 1,
+        "amount": 50000,
+        "remainingAmount": 0.00,
+        "status": "PAID"
+    }
 }
 ```
+Jika participant bayar hutangnya lunas maka akan ada status PAID, namun jika belum lunas maka akan 
+muncul status PARTIALLY_PAID
 
 Untuk Docker
 ```bash
