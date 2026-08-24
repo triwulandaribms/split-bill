@@ -13,7 +13,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Trip Jawa Timur\",\r\n  \"participants\": [\r\n    \"Indra\",\r\n    \"Asep\",\r\n    \"Riyan\"\r\n  ]\r\n}",
+          "raw": "{\r\n  \"name\": \"Trip Bali\",\r\n  \"participants\": [\r\n    \"Citra\",\r\n    \"Angel\",\r\n    \"Dewi\"\r\n  ]\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -112,7 +112,7 @@
           "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
         },
         "url": {
-          "raw": "http://127.0.0.1:8080/api/groups/1",
+          "raw": "http://127.0.0.1:8080/api/groups/2",
           "protocol": "http",
           "host": [
             "127",
@@ -124,7 +124,7 @@
           "path": [
             "api",
             "groups",
-            "1"
+            "2"
           ]
         }
       },
@@ -192,7 +192,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"groupId\": 1,\r\n    \"paidBy\": 1,\r\n    \"amount\": 80000,\r\n    \"description\": \"Dinner\",\r\n    \"category\": \"FOOD\",\r\n    \"participants\": [\r\n        {\r\n            \"participantId\": 2,\r\n            \"shareAmount\": 50000\r\n        },\r\n        {\r\n            \"participantId\": 3,\r\n            \"shareAmount\": 30000\r\n        }\r\n    ]\r\n}",
+          "raw": "{\r\n    \"groupId\": 2,\r\n    \"paidBy\": 4,\r\n    \"amount\": 150000,\r\n    \"description\": \"Transportasi\",\r\n    \"category\": \"TRANSPORT\",\r\n    \"participants\": [\r\n        {\r\n            \"participantId\": 4,\r\n            \"shareAmount\": 50000\r\n        },\r\n        {\r\n            \"participantId\": 5,\r\n            \"shareAmount\": 50000\r\n        },\r\n        {\r\n            \"participantId\": 6,\r\n            \"shareAmount\": 50000\r\n        }\r\n    ]\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -398,7 +398,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/groups/settlement/1",
+          "raw": "http://localhost:8080/api/groups/settlement/2",
           "protocol": "http",
           "host": [
             "localhost"
@@ -408,7 +408,7 @@
             "api",
             "groups",
             "settlement",
-            "1"
+            "2"
           ]
         }
       },
@@ -558,7 +558,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"fromParticipantId\": 2,\r\n    \"toParticipantId\": 1,\r\n    \"amount\": 50000\r\n}",
+          "raw": "{\r\n   \"fromParticipantId\": 2,\r\n    \"toParticipantId\": 1,\r\n    \"amount\": 50000\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -591,7 +591,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"fromParticipantId\": 2,\r\n    \"toParticipantId\": 1,\r\n    \"amount\": 50000\r\n}",
+              "raw": "{\r\n    \"fromParticipantId\": 5,\r\n    \"toParticipantId\": 4,\r\n    \"amount\": 10000\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -599,7 +599,7 @@
               }
             },
             "url": {
-              "raw": "http://127.0.0.1:8080/api/groups/payments/1",
+              "raw": "http://127.0.0.1:8080/api/groups/payments/2",
               "protocol": "http",
               "host": [
                 "127",
@@ -612,7 +612,7 @@
                 "api",
                 "groups",
                 "payments",
-                "1"
+                "2"
               ]
             }
           },
@@ -630,7 +630,7 @@
             },
             {
               "key": "Date",
-              "value": "Sun, 23 Aug 2026 12:50:57 GMT"
+              "value": "Mon, 24 Aug 2026 05:02:09 GMT"
             },
             {
               "key": "Keep-Alive",
@@ -642,7 +642,95 @@
             }
           ],
           "cookie": [],
-          "body": "{\n    \"code\": \"PAY00\",\n    \"message\": \"Payment recorded successfully\",\n    \"data\": null\n}"
+          "body": "{\n    \"code\": \"PAY00\",\n    \"message\": \"Payment recorded successfully\",\n    \"data\": {\n        \"fromParticipantId\": 5,\n        \"toParticipantId\": 4,\n        \"amount\": 10000,\n        \"remainingAmount\": 0,\n        \"status\": \"PAID\"\n    }\n}"
+        }
+      ]
+    },
+    {
+      "name": "get participant",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8080/api/groups/participants/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "groups",
+            "participants",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "sukses",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Trip Jakarta\",\r\n  \"participants\": [\r\n    \"Budi\",\r\n    \"Andi\",\r\n    \"Citra\"\r\n  ]\r\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/api/groups/participants/2",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "groups",
+                "participants",
+                "2"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Mon, 24 Aug 2026 04:14:34 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"code\": \"PAR00\",\n    \"message\": \"Participants found\",\n    \"data\": [\n        {\n            \"id\": 4,\n            \"name\": \"Citra\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Angel\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Dewi\"\n        }\n    ]\n}"
         }
       ]
     }
