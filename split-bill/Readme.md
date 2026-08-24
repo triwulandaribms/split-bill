@@ -157,10 +157,39 @@ curl http://localhost:4110/api/groups/{id}
 
 ## 6. Langkah Kedua Menjalankan Expense
 
-Setelah membuat bill group lalu buat Expense
+Setelah membuat bill group lalu buat Expense, namun harus melihat data participant 
+berdasarkan groupId terlebih dahulu agar memudahkan ketika akan menambah expense
+
 Gunakan endpoint ini :
 
 Untuk Lokal
+
+Method GET
+```bash
+http://127.0.0.1:8080/api/groups/participants/{groupId}
+```
+
+Contoh Respon :
+```bash
+{
+    "code": "PAR00",
+    "message": "Participants found",
+    "data": [
+        {
+            "id": 1,
+            "name": "Indra"
+        },
+        {
+            "id": 2,
+            "name": "Asep"
+        },
+        {
+            "id": 3,
+            "name": "Riyan"
+        }
+    ]
+}
+```
 
 Method POST
 ```bash
@@ -227,7 +256,7 @@ Contoh respon
             "totalAmount": 80000.00
         },
         {
-            "category": "TRANSPORT",
+            "category": "TRANSPORT"
             "totalAmount": 0
         },
         {

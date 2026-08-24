@@ -14,6 +14,7 @@ import com.allobankdev.splitbill.entity.Participant;
 import com.allobankdev.splitbill.model.Response;
 import com.allobankdev.splitbill.model.request.BillGroupReq;
 import com.allobankdev.splitbill.model.response.BillGroupRes;
+import com.allobankdev.splitbill.model.response.ParticipantRes;
 import com.allobankdev.splitbill.repository.BillGroupRepository;
 import com.allobankdev.splitbill.repository.ParticipantRepository;
 
@@ -100,11 +101,10 @@ public class BillGroupService {
 
                 participantRepository.saveAll(participants);
 
-                List<String> participantss =
-                participantRepository.findByGroupId(group.getId())
-                        .stream()
-                        .map(Participant::getName)
-                        .toList();
+                List<String> participantss = participantRepository.findByGroupId(group.getId())
+                                .stream()
+                                .map(Participant::getName)
+                                .toList();
 
                 BillGroupRes response = new BillGroupRes(
                                 group.getId(),
@@ -123,11 +123,10 @@ public class BillGroupService {
                 return billGroupRepository.findById(id)
                                 .map(group -> {
 
-                                        List<String> participants =
-                                        participantRepository.findByGroupId(group.getId())
-                                                .stream()
-                                                .map(Participant::getName)
-                                                .toList();
+                                        List<String> participants = participantRepository.findByGroupId(group.getId())
+                                                        .stream()
+                                                        .map(Participant::getName)
+                                                        .toList();
 
                                         BillGroupRes response = new BillGroupRes(
                                                         group.getId(),
@@ -146,6 +145,30 @@ public class BillGroupService {
                                                                 Response.RESPONSE_CODE_NOT_FOUND,
                                                                 "Group not found",
                                                                 null));
+        }
+
+        public Response<Object> getParticipantsByGroupId(Integer groupId) {
+
+                if (!billGroupRepository.existsById(groupId)) {
+                        return Response.create(
+                                        "PAR",
+                                        Response.RESPONSE_CODE_NOT_FOUND,
+                                        "Group not found",
+                                        null);
+                }
+
+                List<ParticipantRes> participants = participantRepository.findByGroupId(groupId)
+                                .stream()
+                                .map(participant -> new ParticipantRes(
+                                                participant.getId(),
+                                                participant.getName()))
+                                .toList();
+
+                return Response.create(
+                                "PAR",
+                                Response.RESPONSE_CODE_SUCCESS,
+                                "Participants found",
+                                participants);
         }
 
 }

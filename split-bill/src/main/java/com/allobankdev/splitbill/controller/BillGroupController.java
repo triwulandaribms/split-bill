@@ -1,6 +1,5 @@
 package com.allobankdev.splitbill.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +21,16 @@ public class BillGroupController {
     @PostMapping("/add")
     public ResponseEntity<Response<Object>> create(
             @RequestBody BillGroupReq req) {
-    
-        Response<Object> response =
-                billGroupService.createGroup(req);
-    
+
+        Response<Object> response = billGroupService.createGroup(req);
+
         if (response.code().equals(
 
                 "GRP" + Response.RESPONSE_CODE_INVALID_INPUT)) {
-    
+
             return ResponseEntity.badRequest().body(response);
         }
-    
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
@@ -42,8 +40,7 @@ public class BillGroupController {
     public ResponseEntity<Response<Object>> getById(
             @PathVariable Integer id) {
 
-        Response<Object> response =
-                billGroupService.getGroupById(id);
+        Response<Object> response = billGroupService.getGroupById(id);
 
         if (response.code().equals(
                 "GRP" + Response.RESPONSE_CODE_NOT_FOUND)) {
@@ -56,4 +53,20 @@ public class BillGroupController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/participants/{groupId}")
+    public ResponseEntity<Response<Object>> getParticipants(
+            @PathVariable Integer groupId) {
+
+        Response<Object> response = billGroupService.getParticipantsByGroupId(groupId);
+
+        if (response.code().equals(
+                "PAR" + Response.RESPONSE_CODE_NOT_FOUND)) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(response);
+        }
+
+        return ResponseEntity.ok(response);
+    }
 }
