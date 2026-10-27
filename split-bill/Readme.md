@@ -425,7 +425,7 @@ mvn test
 
 # GAMBAR ERD 
 
-![Foto Project](assets/erd splitBill.png)
+![Foto Project](assets/erd.png)
 
 
 
